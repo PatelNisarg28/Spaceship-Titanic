@@ -1,7 +1,7 @@
 
 # Spaceship Titanic - Kaggle Competition
 
-This repository contains the solution for the [Spaceship Titanic Kaggle competition](https://www.kaggle.com/competitions/spaceship-titanic). 
+This repository contains the solution for the [Spaceship Titanic Kaggle competition](https://www.kaggle.com/competitions/spaceship-titanic).  
 The goal of this competition is to predict whether passengers aboard the Spaceship Titanic were transported to an alternate dimension following a collision with a spacetime anomaly.
 
 ## Table of Contents
@@ -9,9 +9,6 @@ The goal of this competition is to predict whether passengers aboard the Spacesh
 - [Dataset Description](#dataset-description)
 - [Approach](#approach)
 - [Results](#results)
-- [How to Run](#how-to-run)
-- [Acknowledgements](#acknowledgements)
-
 ---
 
 ## Project Description
@@ -46,58 +43,36 @@ The solution involves the following steps:
 
 ### 1. Data Exploration
 - Analyzed distributions and correlations in the training dataset.
-- Addressed missing values through imputation.
+- Visualized patterns and trends using Python libraries such as Matplotlib and Seaborn.
 
-### 2. Feature Engineering
+### 2. Handling Missing Values
+- **CryoSleep**: Imputed missing values based on `RoomService` expenditure (likely in cryosleep if no expenditure).
+- **HomePlanet**: Filled with the most frequent value within passenger groups.
+- **Cabin**: Split into `Deck`, `Num`, and `Side`. Missing values were inferred based on group associations where possible.
+- **Age**: Filled using the median value within each `HomePlanet`.
+- **Expenditure Columns (RoomService, FoodCourt, ShoppingMall, Spa, VRDeck)**: Missing values were treated as zero, assuming no expenditure.
+
+### 3. Feature Engineering
 - Extracted meaningful features from `Cabin` (Deck, Num, Side).
+- Created new features such as total expenditure and expenditure-to-age ratio.
 - Encoded categorical features using one-hot encoding.
 
-### 3. Model Development
-- Tried several machine learning models:
+### 4. Model Development
+- Tried several machine learning models, including:
   - Logistic Regression
   - Random Forest
   - Gradient Boosting (XGBoost, LightGBM)
-- Tuned hyperparameters using GridSearchCV.
+- **XGBoost** was selected as the final model based on its superior performance.
+- Tuned hyperparameters using GridSearchCV for optimal results.
 
-### 4. Evaluation
+### 5. Evaluation
 - Evaluated models using accuracy as the metric.
-- Selected the best-performing model based on cross-validation results.
+- Validated models with cross-validation to ensure generalization.
 
 ---
 
 ## Results
-The final model achieved:
-- **Training Accuracy**: 85%
-- **Validation Accuracy**: 83%
-- Submission results: Achieved competitive accuracy on the Kaggle leaderboard.
-
----
-
-## How to Run
-### Prerequisites
-1. Install Python (>= 3.8) and required libraries.
-2. Install dependencies from `requirements.txt`:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-### Steps
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/yourusername/spaceship-titanic.git
-   cd spaceship-titanic
-   ```
-2. Place the datasets (`train.csv`, `test.csv`) in the `data/` folder.
-3. Run the Jupyter notebook `spaceship.ipynb` to execute the analysis.
-
----
-
-## Acknowledgements
-- Kaggle for hosting the competition.
-- [Spaceship Titanic Competition](https://www.kaggle.com/competitions/spaceship-titanic) for the dataset.
-- Machine learning community for publicly shared kernels and insights.
-
----
-
-## License
-This project is licensed under the MIT License.
+The final model (XGBoost) achieved:
+- **Training Accuracy**: 83%
+- **Validation Accuracy**: 82%
+- **Kaggle Submission Accuracy**: Competitive accuracy on the leaderboard.
